@@ -232,21 +232,23 @@ https://github.com/apache/logging-log4j2/compare/log4j-2.3.2-site
 
 ## Sources  
 
-### Directly Used
+### Tools Used
 
 - [`NCSC-NL/log4shell` GitHub Page](https://github.com/NCSC-NL/log4shell)
+- 
 
-### Tools 
+### Log4J Videos
 
 - 
 
-### Good to Know
-
-- 
-
-### Honorable Mentions 
+### Articles Explaining Log4J
 
 - [Log4j Log4Shell 0-Day Vulnerability: All You Need To Know](https://jfrog.com/blog/log4shell-0-day-vulnerability-all-you-need-to-know/) 
+- [Log4Shell: The Log4j Vulnerability Emergency Clearly Explained](https://www.upguard.com/blog/apache-log4j-vulnerability)
+
+### Honorable Mentions
+
+- 
 
 [^1]: [Docker container created by christophetd](https://github.com/christophetd/log4shell-vulnerabre-app) 
 [^2]: [Ten families of malicious samples are spreading using the Log4j2 vulnerability Now](https://blog.netlab.360.com/ten-families-of-malicious-samples-are-spreading-using-the-log4j2-vulnerability-now/) 
