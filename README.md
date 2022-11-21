@@ -6,7 +6,7 @@ A logging tool, written in Java, that is commonly used in many applications acro
 
 ## Setting Up Environment
 
-First get the vulnerable docker and run it using [^1]: 
+First get the vulnerable docker and run it using: [^1] 
 
 ```sh
 docker pull ghcr.io/christophetd/log4shell-vulnerable-app:latest
