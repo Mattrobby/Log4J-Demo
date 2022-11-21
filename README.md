@@ -2,7 +2,7 @@
 
 ## What is Log4J? 
 
-- A logging tool, written in Java, that is commonly used in many applications across the internet
+A logging tool, written in Java, that is commonly used in many applications across the internet
 
 ## Setting Up Environment
 
@@ -169,7 +169,7 @@ This tool can be used to externally scan for *Log4J*. It is an "open detection a
 
 > 🚧 **Bug in Code** 
 >
-> As outlined in [Issue #131](https://github.com/fullhunt/log4j-scan/issues/131), if you run the version directly from the GitHub page it will fail to run. Due to this, I have included the fix (changing `interact.sh` to `oast.fun`) in this repo named `log4j-scan.py`. Thank you [akr3ch](https://github.com/akr3ch) for figuring this out. 
+> As outlined in [Issue #131](https://github.com/fullhunt/log4j-scan/issues/131), if you run the version directly from the orignal GitHub page it will fail to run. Due to this, I have included the fix (changing `interact.sh` to `oast.fun`) in this repo named `log4j-scan.py`. Thank you [akr3ch](https://github.com/akr3ch) for figuring this out. 
 
 To do an external scan on our container, type the following: 
 
