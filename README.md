@@ -88,7 +88,7 @@ We will be using a tool called [JNDIExploit](http://web.archive.org/web/20211211
 > 
 
 ```sh
-java -jar LDAP-Server.jar -i YOUR_IP -p 8888
+java -jar LDAP-Server.jar -i localhost -p 8888
 ```
 
 Once you start the `LDAP` server, we need to create a command to exploit the server. We will use the following as as a template: 
@@ -224,11 +224,11 @@ You then need to update the docker image with these changes. `exit` the containe
 sudo docker commit -a me vulnerable-app ghcr.io/christophetd/log4shell-vulnerable-app
 ```
 
-After this, if you rerun the scanners, [log4j-scan](https://github.com/fullhunt/log4j-scan) will not detect a vulnerability but [log4j-finder](https://github.com/fox-it/log4j-finder) will. Although if you try and do the exploit with [JNDIExploit](http://web.archive.org/web/20211211031401/https://objects.githubusercontent.com/github-production-release-asset-2e65be/314785055/a6f05000-9563-11eb-9a61-aa85eca37c76?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20211211%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20211211T031401Z&X-Amz-Expires=300&X-Amz-Signature=140e57e1827c6f42275aa5cb706fdff6dc6a02f69ef41e73769ea749db582ce0&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=314785055&response-content-disposition=attachment%3B%20filename%3DJNDIExploit.v1.2.zip&response-content-type=application%2Foctet-stream) it will not work. 
+After this, if you rerun the scanners, [log4j-scan](https://github.com/fullhunt/log4j-scan) will not detect a vulnerability but [log4j-finder](https://github.com/fox-it/log4j-finder) will. Although if you try and do the exploit with [JNDIExploit](http://web.archive.org/web/20211211031401/https://objects.githubusercontent.com/github-production-release-asset-2e65be/314785055/a6f05000-9563-11eb-9a61-aa85eca37c76?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20211211%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20211211T031401Z&X-Amz-Expires=300&X-Amz-Signature=140e57e1827c6f42275aa5cb706fdff6dc6a02f69ef41e73769ea749db582ce0&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=314785055&response-content-disposition=attachment%3B%20filename%3DJNDIExploit.v1.2.zip&response-content-type=application%2Foctet-stream) it will not work.  
 
 ## Log4J Vulnerable Code Explained
 
-
+https://github.com/apache/logging-log4j2/compare/log4j-2.3.2-site
 
 ## Sources  
 
@@ -246,7 +246,7 @@ After this, if you rerun the scanners, [log4j-scan](https://github.com/fullhunt/
 
 ### Honorable Mentions 
 
-- 
+- [Log4j Log4Shell 0-Day Vulnerability: All You Need To Know](https://jfrog.com/blog/log4shell-0-day-vulnerability-all-you-need-to-know/) 
 
 [^1]: [Docker container created by christophetd](https://github.com/christophetd/log4shell-vulnerabre-app) 
 [^2]: [Ten families of malicious samples are spreading using the Log4j2 vulnerability Now](https://blog.netlab.360.com/ten-families-of-malicious-samples-are-spreading-using-the-log4j2-vulnerability-now/) 
