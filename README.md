@@ -232,23 +232,36 @@ https://github.com/apache/logging-log4j2/compare/log4j-2.3.2-site
 
 ## Sources  
 
+### Frist Party Sources 
+
+- [Official Apache Log4J Webpage](https://logging.apache.org/log4j/2.x/security.html)
+- [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)
+- [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-4125)
+- [CVE-2021-45046](https://nvd.nist.gov/vuln/detail/CVE-2021-4125)
+- [CVE-2021-4125](https://nvd.nist.gov/vuln/detail/CVE-2021-4125)
+- [CVE-2021-44832](https://nvd.nist.gov/vuln/detail/CVE-2021-44832)
+- [CVE-2021-45105](https://nvd.nist.gov/vuln/detail/CVE-2021-45105)
+
 ### Tools Used
 
-- [`NCSC-NL/log4shell` GitHub Page](https://github.com/NCSC-NL/log4shell)
-- 
+- [`christophetd/log4shell-vulnerable-app` GitHub Page - Docker Container](https://github.com/christophetd/log4shell-vulnerable-app)
+- [`veracode-research/rogue-jndi` GitHub Page - JNDI Server](https://github.com/veracode-research/rogue-jndi)
+- [`fox-it/log4j-finder` GitHub Page - External Scanner ](https://github.com/fox-it/log4j-finder)
+- [`fullhunt/log4j-scan` GitHub Page - Internal Scanner](https://github.com/fullhunt/log4j-scan)
 
 ### Log4J Videos
 
-- 
+- [The Scariest Week in Minecraft History](https://youtu.be/Z22O5uEsF6U)
+- [Exploiting Log4j and Escaping Docker Container | TryHackMe | Lumberjack Turtle Room Walkthrough](https://youtu.be/8paCG7sSWjo)
+- [log4j (Log4Shell) Security Issue Explained at a High Level](https://youtu.be/moAT5dCYjsg)
+- [How Hackers Exploit Log4J to Get a Reverse Shell (Ghidra Log4Shell Demo) | HakByte](https://youtu.be/lBxZL98uvdk)
+- [Log4J Vulnerabilities Continue To Wreak Havoc on the Internet](https://www.youtube.com/watch?v=QhW5csA51Bs&t=1s)
 
 ### Articles Explaining Log4J
 
+- [`NCSC-NL/log4shell` GitHub Page](https://github.com/NCSC-NL/log4shell)
 - [Log4j Log4Shell 0-Day Vulnerability: All You Need To Know](https://jfrog.com/blog/log4shell-0-day-vulnerability-all-you-need-to-know/) 
 - [Log4Shell: The Log4j Vulnerability Emergency Clearly Explained](https://www.upguard.com/blog/apache-log4j-vulnerability)
 
-### Honorable Mentions
-
-- 
-
-[^1]: [Docker container created by christophetd](https://github.com/christophetd/log4shell-vulnerabre-app) 
+[^1]: [Docker container created by christophetd](https://github.com/christophetd/log4shell-vulnerable-app/pkgs/container/log4shell-vulnerable-app)
 [^2]: [Ten families of malicious samples are spreading using the Log4j2 vulnerability Now](https://blog.netlab.360.com/ten-families-of-malicious-samples-are-spreading-using-the-log4j2-vulnerability-now/) 
